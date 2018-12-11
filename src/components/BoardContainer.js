@@ -48,6 +48,7 @@ class BoardContainer extends Component {
     const {actions, handleLaneDragEnd} = this.props
     if (removedIndex !== addedIndex) {
       handleLaneDragEnd(removedIndex, addedIndex, payload)
+      actions.moveLane({oldIndex: removedIndex, newIndex: addedIndex})
     }
   }
   getCardDetails = (laneId, cardIndex) => {

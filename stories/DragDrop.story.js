@@ -11,8 +11,6 @@ storiesOf('Drag-n-Drop', module)
   .add(
     'Basic',
     withInfo('A demonstration of onDragStart and onDragEnd hooks for card and lanes')(() => {
-      let eventBus
-
       const setEventBus = handle => {
         eventBus = handle
       }
@@ -40,8 +38,6 @@ storiesOf('Drag-n-Drop', module)
       const handleLaneDragEnd = (laneId, newPosition) => {
         console.log(`lane drag ended for ${laneId}`)
         console.log(`New lane position: ${newPosition}`)
-
-        eventBus.publish({type: 'MOVE_LANE', oldIndex: laneId, newIndex: newPosition})
       }
 
       const shouldReceiveNewData = nextData => {
@@ -58,7 +54,6 @@ storiesOf('Drag-n-Drop', module)
           handleDragEnd={handleDragEnd}
           handleLaneDragStart={handleLaneDragStart}
           handleLaneDragEnd={handleLaneDragEnd}
-          eventBusHandle={setEventBus}
         />
       )
     })
