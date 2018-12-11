@@ -11,6 +11,12 @@ storiesOf('Drag-n-Drop', module)
   .add(
     'Basic',
     withInfo('A demonstration of onDragStart and onDragEnd hooks for card and lanes')(() => {
+      let eventBus
+
+      const setEventBus = handle => {
+        eventBus = handle
+      }
+
       const handleDragStart = (cardId, laneId) => {
         console.log('drag started')
         console.log(`cardId: ${cardId}`)
@@ -34,6 +40,8 @@ storiesOf('Drag-n-Drop', module)
       const handleLaneDragEnd = (laneId, newPosition) => {
         console.log(`lane drag ended for ${laneId}`)
         console.log(`New lane position: ${newPosition}`)
+
+        eventBus.publish({type: 'MOVE_LANE', oldIndex: laneId, newIndex: newPosition})
       }
 
       const shouldReceiveNewData = nextData => {
@@ -50,6 +58,7 @@ storiesOf('Drag-n-Drop', module)
           handleDragEnd={handleDragEnd}
           handleLaneDragStart={handleLaneDragStart}
           handleLaneDragEnd={handleLaneDragEnd}
+          eventBusHandle={setEventBus}
         />
       )
     })
@@ -57,11 +66,6 @@ storiesOf('Drag-n-Drop', module)
   .add(
     'Drag Styling',
     withInfo('Modifying appearance of dragged card')(() => {
-      return <Board
-        data={data}
-        cardDragClass='draggingCard'
-        laneDragClass='draggingLane'
-        draggable
-      />
+      return <Board data={data} cardDragClass="draggingCard" laneDragClass="draggingLane" draggable />
     })
   )

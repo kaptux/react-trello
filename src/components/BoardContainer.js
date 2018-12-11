@@ -77,6 +77,8 @@ class BoardContainer extends Component {
             })
           case 'UPDATE_LANES':
             return actions.updateLanes(event.lanes)
+          case 'MOVE_LANE':
+            return actions.moveLane({oldIndex: event.oldIndex, newIndex: event.newIndex})
         }
       }
     }
@@ -116,7 +118,18 @@ class BoardContainer extends Component {
   }
 
   render() {
-    const {id, reducerData, draggable, laneDraggable, laneDragClass, style, addLaneTitle, editable, canAddLanes, ...otherProps} = this.props
+    const {
+      id,
+      reducerData,
+      draggable,
+      laneDraggable,
+      laneDragClass,
+      style,
+      addLaneTitle,
+      editable,
+      canAddLanes,
+      ...otherProps
+    } = this.props
     const {addLaneMode} = this.state
     // Stick to whitelisting attributes to segregate board and lane props
     const passthroughProps = pick(this.props, [
@@ -170,7 +183,11 @@ class BoardContainer extends Component {
                 {...passthroughProps}
               />
             )
-            return draggable && laneDraggable ? <Draggable key={lane.id}>{laneToRender}</Draggable> : <span key={lane.id}>{laneToRender}</span>
+            return draggable && laneDraggable ? (
+              <Draggable key={lane.id}>{laneToRender}</Draggable>
+            ) : (
+              <span key={lane.id}>{laneToRender}</span>
+            )
           })}
         </Container>
         {canAddLanes && (
