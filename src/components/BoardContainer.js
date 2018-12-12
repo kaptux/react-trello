@@ -27,16 +27,19 @@ class BoardContainer extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  shouldComponentUpdate(nextProps) {
     // nextProps.data changes when external Board input props change and nextProps.reducerData changes due to event bus or UI changes
     const {data, reducerData, onDataChange} = this.props
-    if (nextProps.reducerData && !isEqual(reducerData, nextProps.reducerData)) {
+
+    if (reducerData.lastAction && nextProps.reducerData && !isEqual(reducerData, nextProps.reducerData)) {
       onDataChange(nextProps.reducerData)
     }
+
     if (nextProps.data && !isEqual(nextProps.data, data)) {
       this.props.actions.loadBoard(nextProps.data)
-      onDataChange(nextProps.data)
     }
+
+    return true
   }
 
   onDragStart = ({payload}) => {

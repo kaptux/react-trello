@@ -1,29 +1,43 @@
 import Lh from '../helpers/LaneHelper'
 
-const boardReducer = (state = {lanes: []}, action) => {
+const boardReducer = (state = {lanes: [], lastAction: ''}, action) => {
   const {payload, type} = action
+  let newState
   switch (type) {
     case 'LOAD_BOARD':
-      return Lh.initialiseLanes(state, payload)
+      newState = Lh.initialiseLanes(state, payload)
+      break
     case 'ADD_CARD':
-      return Lh.appendCardToLane(state, payload)
+      newState = Lh.appendCardToLane(state, payload)
+      break
     case 'REMOVE_CARD':
-      return Lh.removeCardFromLane(state, payload)
+      newState = Lh.removeCardFromLane(state, payload)
+      break
     case 'MOVE_CARD':
-      return Lh.moveCardAcrossLanes(state, payload)
+      newState = Lh.moveCardAcrossLanes(state, payload)
+      break
     case 'UPDATE_CARDS':
-      return Lh.updateCardsForLane(state, payload)
+      newState = Lh.updateCardsForLane(state, payload)
+      break
     case 'UPDATE_LANES':
-      return Lh.updateLanes(state, payload)
+      newState = Lh.updateLanes(state, payload)
+      break
     case 'PAGINATE_LANE':
-      return Lh.paginateLane(state, payload)
+      newState = Lh.paginateLane(state, payload)
+      break
     case 'MOVE_LANE':
-      return Lh.moveLane(state, payload)
+      newState = Lh.moveLane(state, payload)
+      break
     case 'ADD_LANE':
-      return Lh.addLane(state, payload)
+      newState = Lh.addLane(state, payload)
+      break
     default:
-      return state
+      newState = state
+      break
   }
+
+  newState.lastAction = newState !== state ? type : ''
+  return newState
 }
 
 export default boardReducer
