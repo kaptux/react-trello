@@ -33,6 +33,9 @@ class BoardContainer extends Component {
 
     if (reducerData.lastAction && nextProps.reducerData && !isEqual(reducerData, nextProps.reducerData)) {
       delete nextProps.reducerData.lastAction
+      delete reducerData.lastAction
+
+      console.log('onDataChage')
       onDataChange(nextProps.reducerData)
     }
 
