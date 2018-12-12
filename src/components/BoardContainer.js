@@ -31,11 +31,12 @@ class BoardContainer extends Component {
     // nextProps.data changes when external Board input props change and nextProps.reducerData changes due to event bus or UI changes
     const {data, reducerData, onDataChange} = this.props
 
-    if (reducerData.lastAction && nextProps.reducerData && !isEqual(reducerData, nextProps.reducerData)) {
-      delete nextProps.reducerData.lastAction
-      delete reducerData.lastAction
+    console.log('reducerData', reducerData)
+    console.log('next-reducerData', nextProps.reducerData)
 
-      console.log('onDataChage')
+    if (reducerData.lastAction && nextProps.reducerData && !isEqual(reducerData, nextProps.reducerData)) {
+      delete nextProps.lastAction
+      console.log('--> onDataChage')
       onDataChange(nextProps.reducerData)
     }
 
