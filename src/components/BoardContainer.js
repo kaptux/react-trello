@@ -32,6 +32,7 @@ class BoardContainer extends Component {
     const {data, reducerData, onDataChange} = this.props
 
     if (reducerData.lastAction && nextProps.reducerData && !isEqual(reducerData, nextProps.reducerData)) {
+      delete nextProps.reducerData.lastAction
       onDataChange(nextProps.reducerData)
     }
 
